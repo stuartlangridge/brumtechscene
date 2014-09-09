@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <!-- ad urbem pertinet -->
+        <title>Brum Tech Scene</title>
+        <link rel="stylesheet" href="/theme/css/codepro_regulardemo_macroman/stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="/theme/css/style.css" />
+</head>
+
+<body>
+<div id="wrap">
+    <header>
+        <h1>Brum Tech Scene</h1>
+        <p>Interviews and conversations with interesting people doing 
+        interesting things in the Birmingham tech community</p>
+    </header>
+    <div id="ivs">
+        <div>
+            <p>Nicole Kidman</p>
+            <p><a href="http://youtu.be/-dpkS1Qeq0I">View video</a><span></span><img src="/theme/photos/nicole.jpg"></p>
+            <p>Super talented.</p>
+        </div>
+        <div>
+            <p>Ezio Auditore</p>
+            <p><a href="http://youtu.be/4K39UWxdm0U">View video</a><span></span><img src="/theme/photos/ezio.jpg"></p>
+            <p>Legendary assassin.</p>
+        </div>
+    </div>
+</div>
+<script>
+// asynchronously load YouTube JS API
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var ytapiready = false, videoPauseTimes = {}, 
+    videoSizes = [[1280,720], [853,480], [640,360], [560,315], [320,240]];
+
+function onYouTubeIframeAPIReady() {
+    ytapiready = true;
+    // make the picture discs clickable
+    Array.prototype.slice.call(document.querySelectorAll("#ivs div p:nth-child(2) a")).forEach(function(a) {
+        a.onclick = function(e) {
+
+            var player;
+            var ytslug = a.href.split("/");
+            ytslug = ytslug[ytslug.length - 1];
+
+            if (a.parentNode.parentNode.className == "playing") {
+                if (a.player) {
+                    try {
+                        videoPauseTimes[ytslug] = a.player.getCurrentTime();
+                        a.player.destroy();
+                    } catch(e) {}
+                }
+                // wait a second and try destroying the player again
+                // in case it's in the process of being created
+                setTimeout(function() {
+                    try { a.player.destroy(); } catch(e) {}
+                }, 1000);
+
+                a.parentNode.parentNode.className = "";
+                e.preventDefault();
+                return false;
+            }
+
+            a.parentNode.parentNode.className = "playing";
+            var playerReplaces = document.createElement("strong");
+            var iframecontainer = a.parentNode.getElementsByTagName("span")[0];
+            iframecontainer.appendChild(playerReplaces);
+
+            var vidh, vidw;
+            if (window.matchMedia("(min-width: 1200px)").matches) {
+                vidw = 1280; vidh = 720;
+            } else if (window.matchMedia("(min-width: 900px)").matches) {
+                vidw = 853; vidh = 480;
+            } else if (window.matchMedia("(min-width: 750px)").matches) {
+                vidw = 640; vidh = 360;
+            } else if (window.matchMedia("(min-width: 600px)").matches) {
+                vidw = 560; vidh = 315;
+            } else {
+                vidw = 320; vidh = 240;
+            }
+
+            setTimeout(function() {
+                var pausedButMaybeJustSkippingTimeout;
+                player = new YT.Player(playerReplaces, {
+                    height: vidh.toString(),
+                    width: vidw.toString(),
+                    videoId: ytslug,
+                    playerVars: {
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0,
+                        controls: 1,
+                        autoplay: 1,
+                        start: Math.round(videoPauseTimes[ytslug] || 0)
+                    },
+                    events: {
+                        onReady: function(event) {},
+                        onStateChange: function(event) {
+                            switch (event.data) {
+                                case YT.PlayerState.PAUSED:
+                                    videoPauseTimes[ytslug] = event.target.getCurrentTime();
+                                    clearTimeout(pausedButMaybeJustSkippingTimeout);
+                                    pausedButMaybeJustSkippingTimeout = setTimeout(function() {
+                                        // hide the video, but wait a bit in case they've just skipped on
+                                        event.target.destroy();
+                                        a.parentNode.parentNode.className = "";
+                                    }, 3000);
+                                    break;
+                                case YT.PlayerState.ENDED:
+                                    videoPauseTimes[ytslug] = 0;
+                                    event.target.destroy();
+                                    a.parentNode.parentNode.className = "";
+                                    break;
+                                case YT.PlayerState.PLAYING:
+                                    clearTimeout(pausedButMaybeJustSkippingTimeout);
+                                    break;
+                                default:
+                                    // ignore
+                            }
+                        }
+                    }
+                });
+                a.player = player;
+                console.log("created a player", a.player);
+            }, 700); // needs to be longer than the transition on the span
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        };
+    });
+}
+
+</script>
+</body>
+</html>
