@@ -303,6 +303,11 @@ header p {
         transform: translateX(-160px) translateY(-45px);
     }
 
+    header p {
+        max-width: 250px;
+        font-size: 10px;
+    }
+
 }
 @media (min-width: 600px) {
     #wrap { max-width: 600px; } /* min-width */
@@ -338,6 +343,11 @@ header p {
         /* - (height - min-width)/2 */
         -webkit-transform: translateX(-280px) translateY(-57.5px);
         transform: translateX(-280px) translateY(-57.5px);
+    }
+
+    header p {
+        max-width: 350px;
+        font-size: 14px;
     }
 
 }
@@ -412,6 +422,11 @@ header p {
         /* - (height - min-width)/2 */
         -webkit-transform: translateX(-426px) translateY(-165px);
         transform: translateX(-426px) translateY(-165px);
+    }
+
+    header p {
+        max-width: 450px;
+        font-size: 14px;
     }
 
 }
