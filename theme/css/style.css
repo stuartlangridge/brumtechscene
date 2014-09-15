@@ -409,6 +409,10 @@ footer p a {
     #ivs div p:nth-child(1) { font-size: 22px; }
     #ivs div p:nth-child(3) { font-size: 18px; }
 
+    header p {
+        font-size: 18px;
+    }
+
 }
 @media (min-width: 900px) {
     #wrap { max-width: 900px; } /* min-width */
@@ -448,7 +452,7 @@ footer p a {
 
     header p {
         max-width: 450px;
-        font-size: 14px;
+        font-size: 18px;
     }
 
     #ivs div p:nth-child(1) { font-size: 26px; }
