@@ -272,6 +272,7 @@ footer p a {
         width: 150px;
     }
     #ivs div {
+        -webkit-align-items: center;
         align-items: center;
     }
 
