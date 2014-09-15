@@ -410,6 +410,7 @@ footer p a {
     #ivs div p:nth-child(3) { font-size: 18px; }
 
     header p {
+        max-width: 450px;
         font-size: 18px;
     }
 
