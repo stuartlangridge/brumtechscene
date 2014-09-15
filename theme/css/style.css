@@ -48,8 +48,7 @@ footer {
 footer p {
     text-align: right;
     color: white;
-    padding: 10px;
-    max-width: 60%;
+    padding: 10px 10px 10px 10px;
     font-family: sans-serif;
 }
 footer p a {
@@ -320,6 +319,10 @@ footer p a {
     header p {
         max-width: 250px;
         font-size: 10px;
+    }
+
+    footer p {
+        padding: 10px 10px 10px 40%;
     }
 
 }
