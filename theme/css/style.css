@@ -139,6 +139,7 @@ footer p a {
     order: 2;
     height: 30px;
     line-height: 30px;
+    font-size: 16px;
 }
 
 #ivs div p:nth-child(2) {
@@ -365,6 +366,9 @@ footer p a {
         font-size: 14px;
     }
 
+    #ivs div p:nth-child(1) { font-size: 20px; }
+    #ivs div p:nth-child(3) { font-size: 16px; }
+
 }
 @media (min-width: 750px) {
     #wrap { max-width: 750px; } /* min-width */
@@ -401,6 +405,9 @@ footer p a {
         -webkit-transform: translateX(-320px) translateY(-65px);
         transform: translateX(-320px) translateY(-65px);
     }
+
+    #ivs div p:nth-child(1) { font-size: 24px; }
+    #ivs div p:nth-child(3) { font-size: 20px; }
 
 }
 @media (min-width: 900px) {
@@ -443,6 +450,9 @@ footer p a {
         max-width: 450px;
         font-size: 14px;
     }
+
+    #ivs div p:nth-child(1) { font-size: 28px; }
+    #ivs div p:nth-child(3) { font-size: 24px; }
 
 }
 @media (min-width: 1280px) {
